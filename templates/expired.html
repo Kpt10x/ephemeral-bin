@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Note Expired - EphemeralBin{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card bg-danger bg-opacity-10 border-danger">
+            <div class="card-body text-center">
+                <i class="fas fa-exclamation-circle text-danger fa-3x mb-3"></i>
+                <h1 class="card-title text-danger mb-3">Note Expired</h1>
+                <p class="card-text mb-4">{{ message }}</p>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    This is how EphemeralBin works - notes are permanently deleted for security and privacy.
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-2">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary w-100">
+                            <i class="fas fa-plus me-2"></i>Create New Note
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="javascript:history.back()" class="btn btn-secondary w-100">
+                            <i class="fas fa-arrow-left me-2"></i>Go Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

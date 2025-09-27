@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card bg-secondary">
+            <div class="card-body">
+                <h1 class="card-title mb-4">
+                    <i class="fas fa-edit me-2"></i>Create a Self-Destructing Note
+                </h1>
+                <p class="card-text mb-4">
+                    Share sensitive information that automatically deletes after viewing or when time expires.
+                </p>
+                
+                <form method="POST" action="{{ url_for('create_note') }}" id="noteForm">
+                    <div class="mb-4">
+                        <label for="content" class="form-label">
+                            <i class="fas fa-sticky-note me-1"></i>Note Content
+                        </label>
+                        <textarea name="content" id="content" class="form-control bg-dark text-light border-secondary" 
+                                  rows="6" placeholder="Enter your note content here..." required></textarea>
+                        <div class="form-text">Your note will be encrypted and stored securely.</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">
+                            <i class="fas fa-clock me-1"></i>Expiration Options
+                        </label>
+                        
+                        <!-- Option 1: Card-based Layout (Default) -->
+                        <div class="row" id="cardLayout">
+                            <div class="col-md-6">
+                                <div class="card expiration-card mb-3">
+                                    <div class="card-header">
+                                        <i class="fas fa-eye me-2"></i>Delete After Views
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="expiration_type" 
+                                                   id="1_view" value="1_view" checked>
+                                            <label class="form-check-label" for="1_view">
+                                                <strong>After 1 view</strong> 
+                                                <span class="badge bg-danger ms-2">Most Secure</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="expiration_type" 
+                                                   id="5_views" value="5_views">
+                                            <label class="form-check-label" for="5_views">
+                                                <strong>After 5 views</strong>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="expiration_type" 
+                                                   id="10_views" value="10_views">
+                                            <label class="form-check-label" for="10_views">
+                                                <strong>After 10 views</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card expiration-card mb-3">
+                                    <div class="card-header">
+                                        <i class="fas fa-clock me-2"></i>Delete After Time
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="expiration_type" 
+                                                   id="10_minutes" value="10_minutes">
+                                            <label class="form-check-label" for="10_minutes">
+                                                <strong>After 10 minutes</strong>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="expiration_type" 
+                                                   id="1_hour" value="1_hour">
+                                            <label class="form-check-label" for="1_hour">
+                                                <strong>After 1 hour</strong>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="expiration_type" 
+                                                   id="24_hours" value="24_hours">
+                                            <label class="form-check-label" for="24_hours">
+                                                <strong>After 24 hours</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Option 2: Button Layout (Alternative) -->
+                        <div class="d-none" id="buttonLayout">
+                            <div class="mb-3">
+                                <h6 class="text-light mb-3">
+                                    <i class="fas fa-eye me-2"></i>Delete After Views
+                                </h6>
+                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                    <input type="radio" class="btn-check" name="expiration_type" id="btn_1_view" value="1_view" checked>
+                                    <label class="btn expiration-btn" for="btn_1_view">
+                                        <strong>1 View</strong>
+                                        <br><small>Most Secure</small>
+                                    </label>
+                                    
+                                    <input type="radio" class="btn-check" name="expiration_type" id="btn_5_views" value="5_views">
+                                    <label class="btn expiration-btn" for="btn_5_views">
+                                        <strong>5 Views</strong>
+                                        <br><small>Shared Use</small>
+                                    </label>
+                                    
+                                    <input type="radio" class="btn-check" name="expiration_type" id="btn_10_views" value="10_views">
+                                    <label class="btn expiration-btn" for="btn_10_views">
+                                        <strong>10 Views</strong>
+                                        <br><small>Team Access</small>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <h6 class="text-light mb-3">
+                                    <i class="fas fa-clock me-2"></i>Delete After Time
+                                </h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <input type="radio" class="btn-check" name="expiration_type" id="btn_10_minutes" value="10_minutes">
+                                    <label class="btn expiration-btn" for="btn_10_minutes">
+                                        <strong>10 Minutes</strong>
+                                        <br><small>Quick Share</small>
+                                    </label>
+                                    
+                                    <input type="radio" class="btn-check" name="expiration_type" id="btn_1_hour" value="1_hour">
+                                    <label class="btn expiration-btn" for="btn_1_hour">
+                                        <strong>1 Hour</strong>
+                                        <br><small>Meeting Notes</small>
+                                    </label>
+                                    
+                                    <input type="radio" class="btn-check" name="expiration_type" id="btn_24_hours" value="24_hours">
+                                    <label class="btn expiration-btn" for="btn_24_hours">
+                                        <strong>24 Hours</strong>
+                                        <br><small>Daily Access</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Option 3: List Layout (High Contrast) -->
+                        <div class="d-none" id="listLayout">
+                            <div class="list-group">
+                                <h6 class="text-light mb-3 border-bottom pb-2">
+                                    <i class="fas fa-eye me-2"></i>Delete After Views
+                                </h6>
+                                
+                                <label class="list-group-item list-group-item-action bg-dark text-light border-secondary d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <input class="form-check-input me-3" type="radio" name="expiration_type" value="1_view" checked>
+                                        <strong>Delete after 1 view</strong>
+                                        <br><small class="text-muted">Most secure option - note destroyed immediately after reading</small>
+                                    </div>
+                                    <span class="badge bg-danger">Recommended</span>
+                                </label>
+                                
+                                <label class="list-group-item list-group-item-action bg-dark text-light border-secondary d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <input class="form-check-input me-3" type="radio" name="expiration_type" value="5_views">
+                                        <strong>Delete after 5 views</strong>
+                                        <br><small class="text-muted">Good for small team sharing</small>
+                                    </div>
+                                </label>
+                                
+                                <label class="list-group-item list-group-item-action bg-dark text-light border-secondary d-flex justify-content-between align-items-center mb-4">
+                                    <div>
+                                        <input class="form-check-input me-3" type="radio" name="expiration_type" value="10_views">
+                                        <strong>Delete after 10 views</strong>
+                                        <br><small class="text-muted">Suitable for larger group access</small>
+                                    </div>
+                                </label>
+                                
+                                <h6 class="text-light mb-3 border-bottom pb-2">
+                                    <i class="fas fa-clock me-2"></i>Delete After Time
+                                </h6>
+                                
+                                <label class="list-group-item list-group-item-action bg-dark text-light border-secondary d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <input class="form-check-input me-3" type="radio" name="expiration_type" value="10_minutes">
+                                        <strong>Delete after 10 minutes</strong>
+                                        <br><small class="text-muted">Perfect for quick password sharing</small>
+                                    </div>
+                                </label>
+                                
+                                <label class="list-group-item list-group-item-action bg-dark text-light border-secondary d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <input class="form-check-input me-3" type="radio" name="expiration_type" value="1_hour">
+                                        <strong>Delete after 1 hour</strong>
+                                        <br><small class="text-muted">Good for meeting notes or temporary info</small>
+                                    </div>
+                                </label>
+                                
+                                <label class="list-group-item list-group-item-action bg-dark text-light border-secondary d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <input class="form-check-input me-3" type="radio" name="expiration_type" value="24_hours">
+                                        <strong>Delete after 24 hours</strong>
+                                        <br><small class="text-muted">For information that needs daily access</small>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UI Layout Switcher -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-center">
+                            <div class="btn-group" role="group" aria-label="Layout options">
+                                <button type="button" class="btn btn-outline-light btn-sm active" id="cardBtn">
+                                    <i class="fas fa-th-large me-1"></i>Cards
+                                </button>
+                                <button type="button" class="btn btn-outline-light btn-sm" id="buttonBtn">
+                                    <i class="fas fa-th me-1"></i>Buttons
+                                </button>
+                                <button type="button" class="btn btn-outline-light btn-sm" id="listBtn">
+                                    <i class="fas fa-list me-1"></i>List
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus-circle me-2"></i>Create Secure Note
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <div class="alert alert-info">
+                <i class="fas fa-shield-alt me-2"></i>
+                <strong>Privacy Notice:</strong> Notes are stored temporarily and permanently deleted after expiration. 
+                We cannot recover deleted notes.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card bg-success bg-opacity-10 border-success">
+            <div class="card-body text-center">
+                <i class="fas fa-check-circle text-success fa-3x mb-3"></i>
+                <h1 class="card-title text-success mb-3">Note Created Successfully!</h1>
+                <p class="card-text mb-4">Your secure note has been created and is ready to share.</p>
+                
+                <div class="mb-4">
+                    <label class="form-label">Your Shareable Link:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-dark text-light border-secondary" 
+                               id="noteUrl" value="{{ note_url }}" readonly>
+                        <button class="btn btn-outline-success" type="button" id="copyButton">
+                            <i class="fas fa-copy me-1"></i>Copy
+                        </button>
+                    </div>
+                    <div class="form-text text-success" id="copyMessage" style="display: none;">
+                        <i class="fas fa-check me-1"></i>Link copied to clipboard!
+                    </div>
+                </div>
+
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Important:</strong> Save this link now! Once the note expires, it cannot be recovered.
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-2">
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary w-100">
+                            <i class="fas fa-plus me-2"></i>Create Another Note
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ note_url }}" class="btn btn-primary w-100" target="_blank">
+                            <i class="fas fa-eye me-2"></i>View Note
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

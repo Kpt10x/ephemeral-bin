@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Viewing Note - EphemeralBin{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card bg-secondary">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="fas fa-eye me-2"></i>Secure Note
+                </h5>
+                {% if accessed_time %}
+                <small class="text-muted">
+                    <i class="fas fa-clock me-1"></i>Accessed: {{ accessed_time }}
+                </small>
+                {% else %}
+                <small class="text-muted">
+                    <i class="fas fa-clock me-1"></i>Viewing Now
+                </small>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <div class="note-content p-3 bg-dark rounded border">
+                    <pre class="text-light mb-0">{{ content }}</pre>
+                </div>
+                
+                {% if message %}
+                <div class="alert alert-warning mt-3">
+                    <i class="fas fa-trash-alt me-2"></i>{{ message }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <button class="btn btn-outline-light w-100" id="copyContent">
+                            <i class="fas fa-copy me-2"></i>Copy Content
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary w-100">
+                            <i class="fas fa-plus me-2"></i>Create New Note
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-danger mt-4">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Security Warning:</strong> This note may be deleted automatically based on its expiration settings. 
+            Save any important information now.
+        </div>
+    </div>
+</div>
+{% endblock %}
